@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://thebharath.co"),
   title: "Bharath Kumar Rajesh // AI Engineer",
   description:
-    "GTA-inspired open-world portfolio. AI Engineer building production multi-agent systems: LangGraph, Claude on Amazon Bedrock, MCP, RAG, and LLM observability.",
+    "Formula 1 themed portfolio. AI Engineer building production multi-agent systems: LangGraph, Claude on Amazon Bedrock, MCP, RAG, and LLM observability.",
   keywords: [
     "AI Engineer",
     "Forward Deployed Engineer",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Bharath Kumar Rajesh // AI Engineer",
     description:
-      "An explorable open-world portfolio. Agentic systems, evals, and frontier-model tooling.",
+      "A Formula 1 themed portfolio. Agentic systems, evals, and frontier-model tooling.",
     url: "https://thebharath.co",
     siteName: "thebharath.co",
     type: "website",

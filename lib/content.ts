@@ -284,19 +284,19 @@ export const contactEmail = "bharath.kr702@gmail.com";
 export const portfolioUrl = "https://thebharath.co";
 
 export const navItems: NavItem[] = [
-  { id: "hero", label: "Home" },
-  { id: "about", label: "About" },
-  { id: "projects", label: "Missions" },
-  { id: "experience", label: "Mission Log" },
+  { id: "hero", label: "Grid" },
+  { id: "about", label: "Driver" },
+  { id: "projects", label: "Race Wins" },
+  { id: "experience", label: "Season" },
   { id: "publications", label: "Trophies" },
-  { id: "certifications", label: "Licenses" },
-  { id: "contact", label: "Safehouse" },
+  { id: "certifications", label: "Super License" },
+  { id: "contact", label: "Pit Wall" },
 ];
 
-// Loading tips that cycle on the splash screen. No em dashes.
+// Boot lines that cycle during the start-lights sequence. No em dashes.
 export const loadingTips: string[] = [
-  "Booting agent runtime...",
-  "Loading mission data...",
-  "Syncing audit logs...",
-  "Entering Los Santos...",
+  "Spooling up the power unit...",
+  "Warming the tyres to temperature...",
+  "Telemetry link online...",
+  "Lights out and away we go...",
 ];

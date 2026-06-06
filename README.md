@@ -1,13 +1,15 @@
-# thebharath.co // GTA-Inspired Open-World Portfolio
+# thebharath.co // Formula 1 Themed Portfolio
 
-An original Grand Theft Auto inspired open-world portfolio for Bharath Kumar Rajesh.
-Each section is reframed as a game system: a loading screen, character stats, a
-mission log, a heist board, a trophy case, license cards, and a safehouse phone.
-It reads cleanly as a professional portfolio for AI/ML and forward-deployed
-engineering roles while feeling like a AAA game HUD.
+A Formula 1 race-team themed portfolio for Bharath Kumar Rajesh. Each section is
+reframed as part of a race weekend: a start-lights launch sequence, a driver
+profile with a car setup sheet, a season race calendar, a winners circle, a
+trophy cabinet, an FIA super license, and a pit-wall team radio. It reads
+cleanly as a professional portfolio for AI/ML and forward-deployed engineering
+roles while feeling like a broadcast race HUD.
 
-This is an original homage. It does not use Rockstar Games trademarks, the GTA
-logo, the Pricedown font, or any official art.
+This is an original homage. It does not use Formula 1, FIA, or any team
+trademarks, logos, liveries, or official art. The car, helmet, and HUD are all
+original SVG and CSS.
 
 ## Tech stack
 
@@ -36,40 +38,58 @@ npm run start
 
 ## Editing content
 
-Every string lives in one typed file: `lib/content.ts`. Edit the profile, skills,
-missions, heists (projects), trophies (publications), licenses (certifications),
-and phone apps (contact) there and the whole site updates.
+Every string lives in one typed file: `lib/content.ts`. Edit the profile, skills
+(car setup), missions (season results), projects (race wins), publications
+(trophies), certifications (super license), and contact channels there and the
+whole site updates.
 
-## Assets you can drop in
+## The character
 
-- `public/resume.pdf`: arms the "PICK UP THE BRIEFCASE" resume download and the
-  phone Resume app. Until then the link points to a missing file.
-- Portrait image: the loading screen and license cards use a CSS silhouette
-  placeholder. Swap in a real portrait by replacing those blocks if desired.
-- Skyline background: the hero uses a CSS gradient and a CSS skyline. Drop an
-  image behind the hero if you want a photo backdrop.
+The "driver" is an original SVG: a side-view formula car with spinning wheels
+(`components/art/RaceCar.tsx`) and a racing helmet avatar
+(`components/art/Helmet.tsx`). The car launches off the line on the loading
+screen and drives into the hero.
+
+## Animations and motion
+
+- Start-lights launch sequence: five lights go red one by one, then lights out
+  and the car fires off the line into the hero.
+- Telemetry HUD: a live speed and gear readout that responds to scroll velocity,
+  a DRS indicator, a points counter, a mini track map that fills as you move
+  through sections, and tyre and strategy status bars.
+- Scrolling asphalt with a moving racing line behind the hero.
+- Car setup bars animate in with F1 timing colours (purple is fastest, green is
+  strong, yellow is mid).
+- Section reveals stagger upward on scroll.
 
 ## Easter eggs
 
-- Scroll-money counter in the HUD ticks up as you scroll and lands on a round
-  number at the bottom.
-- MISSION PASSED banner slaps in once when you scroll past the projects.
-- Cheat console: press the tilde key and type a code. VICECITY switches to Vice
-  City night mode, LOSSANTOS returns to Los Santos day mode. WANTED and COOLDOWN
-  change the wanted level.
-- Konami sequence (up, up, down, down, left, right, left, right, b, a) raises a
-  wanted level in the HUD with a siren flash.
-- Weapon wheel: press Tab on desktop, or use the target button bottom-right. On
-  mobile the same button opens a pause-menu list. Both reach every section.
+- Speed and gear in the HUD react to how fast you scroll.
+- A points counter ticks up as you scroll and lands on a round number.
+- CHEQUERED FLAG banner waves in once when you scroll past the race wins.
+- Pit command console: press the tilde key and type a command. NIGHTRACE switches
+  to a night race under the lights, RACEDAY returns to full sun, PUSH and BOX
+  change push mode.
+- Konami sequence (up, up, down, down, left, right, left, right, b, a) engages
+  push mode in the HUD with a siren flash.
+- Steering wheel: press Tab on desktop, or use the wheel button bottom-right. On
+  mobile the same button opens a pit-menu list. Both reach every section.
 
 ## Accessibility and performance
 
 - Semantic HTML, keyboard navigable, visible focus rings, ARIA labels on the
-  weapon wheel and phone apps.
-- The pause-menu list and radio tuner reach every section without the wheel.
-- Honors prefers-reduced-motion: disables screen shake and heavy parallax while
-  keeping simple fades.
+  steering wheel and pit-wall channels.
+- The pit-menu list and radio strip reach every section without the wheel.
+- Honors prefers-reduced-motion: disables screen shake, wheel spin, and the
+  scrolling track while keeping simple fades.
 - Below-the-fold sections are lazy-loaded.
+
+## Assets you can drop in
+
+- `public/resume.pdf`: arms the "GRAB THE MEDIA PASS" resume download and the
+  pit-wall Resume channel.
+- Portrait image: the driver profile and super-license cards use the SVG helmet
+  placeholder. Swap in a real portrait if desired.
 
 ## Deploy to Vercel (thebharath.co)
 

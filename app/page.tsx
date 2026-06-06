@@ -113,11 +113,12 @@ function Game() {
         <Certifications />
         <Contact />
 
-        <footer className="border-t border-white/10 px-5 py-10 text-center">
+        <footer className="relative border-t border-white/10 px-5 py-10 text-center">
+          <div className="checkered absolute left-0 right-0 top-0 h-2 opacity-50" aria-hidden />
           <p className="font-mono text-xs uppercase tracking-widest text-muted">
-            Original homage. Not affiliated with Rockstar Games. Built with Next.js.
+            Original homage. Not affiliated with Formula 1, the FIA, or any team. Built with Next.js.
           </p>
-          <p className="mt-2 font-display text-xl text-hudgold">THANKS FOR PLAYING</p>
+          <p className="mt-2 font-display text-xl text-[var(--accent)]">SEE YOU ON THE PODIUM</p>
         </footer>
       </main>
     </>

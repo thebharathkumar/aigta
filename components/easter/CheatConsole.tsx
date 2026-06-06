@@ -5,12 +5,12 @@ import { Terminal } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useGame } from "../providers/GameProvider";
 
-// Fake cheat codes. Typing one toggles a theme or pokes the HUD. Pure fun.
+// Pit commands. Typing one toggles a theme or pokes the HUD. Pure fun.
 const CHEATS: Record<string, { label: string; run: (g: ReturnType<typeof useGame>) => void }> = {
-  VICECITY: { label: "Vice City night mode", run: (g) => g.setTheme("vice") },
-  LOSSANTOS: { label: "Los Santos day mode", run: (g) => g.setTheme("los-santos") },
-  WANTED: { label: "Heat is on", run: (g) => g.setWanted(5) },
-  COOLDOWN: { label: "Lose the cops", run: (g) => g.setWanted(0) },
+  NIGHTRACE: { label: "Night race under the lights", run: (g) => g.setTheme("night") },
+  RACEDAY: { label: "Race day, full sun", run: (g) => g.setTheme("race") },
+  PUSH: { label: "Push mode engaged", run: (g) => g.setWanted(5) },
+  BOX: { label: "Box this lap, cool down", run: (g) => g.setWanted(0) },
 };
 
 export default function CheatConsole() {
@@ -42,12 +42,12 @@ export default function CheatConsole() {
     e.preventDefault();
     const code = value.trim().toUpperCase();
     const cheat = CHEATS[code];
-    game.play("click");
+    game.play("rev");
     if (cheat) {
       cheat.run(game);
-      setFeedback(`CHEAT ACTIVATED: ${cheat.label}`);
+      setFeedback(`COPY THAT: ${cheat.label}`);
     } else {
-      setFeedback("UNKNOWN CHEAT");
+      setFeedback("RADIO CHECK: command not recognised");
     }
     setValue("");
   };
@@ -61,16 +61,16 @@ export default function CheatConsole() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -80, opacity: 0 }}
         >
-          <div className="hud-panel w-full max-w-lg rounded-xl p-3 shadow-hud">
+          <div className="carbon w-full max-w-lg rounded-xl border border-white/10 p-3 shadow-hud">
             <form onSubmit={submit} className="flex items-center gap-2">
               <Terminal size={16} className="text-hudgreen" />
-              <span className="font-mono text-xs text-hudgreen">cheat:</span>
+              <span className="font-mono text-xs text-hudgreen">pit:</span>
               <input
                 ref={inputRef}
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
-                placeholder="Try VICECITY or LOSSANTOS"
-                aria-label="Cheat code console"
+                placeholder="Try NIGHTRACE or RACEDAY"
+                aria-label="Pit command console"
                 className="flex-1 bg-transparent font-mono text-sm text-ink outline-none placeholder:text-muted"
                 autoComplete="off"
                 spellCheck={false}
@@ -85,7 +85,7 @@ export default function CheatConsole() {
               </p>
             )}
             <p className="mt-1 font-mono text-[10px] text-muted">
-              Codes: VICECITY, LOSSANTOS, WANTED, COOLDOWN. Tilde to close.
+              Commands: NIGHTRACE, RACEDAY, PUSH, BOX. Tilde to close.
             </p>
           </div>
         </motion.div>

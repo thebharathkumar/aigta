@@ -32,8 +32,8 @@ export default function Contact() {
   return (
     <Section id="contact">
       <Reveal>
-        <Eyebrow>Safehouse</Eyebrow>
-        <Heading>OPEN THE PHONE</Heading>
+        <Eyebrow>Pit Wall</Eyebrow>
+        <Heading>TEAM RADIO</Heading>
       </Reveal>
 
       <div className="mt-10 grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
@@ -53,7 +53,7 @@ export default function Contact() {
                 {/* Status bar */}
                 <div className="mb-6 flex items-center justify-between font-mono text-[11px] text-ink">
                   <span>{now}</span>
-                  <span className="text-hudgreen">iFone // Safehouse</span>
+                  <span className="text-hudgreen">PIT WALL // COMMS</span>
                 </div>
 
                 <div className="grid grid-cols-3 gap-4">
@@ -91,11 +91,11 @@ export default function Contact() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <div className="hud-panel rounded-2xl p-6 shadow-hud">
-            <h3 className="font-display text-3xl text-ink">LET&apos;S TALK</h3>
+          <div className="carbon rounded-2xl border border-white/10 p-6 shadow-hud">
+            <h3 className="font-display text-3xl text-ink">BOX, BOX. LET&apos;S TALK</h3>
             <p className="mt-3 text-base leading-relaxed text-muted">
-              Tap an app to reach me. I am open to AI/ML Engineer, Forward Deployed Engineer, and
-              Software Engineer roles.
+              Open a channel to reach me. I am open to AI/ML Engineer, Forward Deployed Engineer,
+              and Software Engineer roles.
             </p>
             <div className="mt-5 flex items-center gap-2 rounded-lg border border-hudcyan/30 bg-hudcyan/5 px-4 py-3">
               <MapPin size={16} className="text-hudcyan" />
@@ -108,10 +108,10 @@ export default function Contact() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => play("stamp")}
-              className="mt-6 inline-flex items-center gap-2 rounded-lg bg-hudgold px-6 py-3 font-display text-lg tracking-wide text-black shadow-glow transition-transform hover:scale-[1.03]"
+              className="mt-6 inline-flex items-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-3 font-display text-lg tracking-wide text-white shadow-glow transition-transform hover:scale-[1.03]"
             >
               <FileText size={18} />
-              PICK UP THE BRIEFCASE (RESUME)
+              GRAB THE MEDIA PASS (RESUME)
             </a>
             <p className="mt-2 font-mono text-[10px] uppercase tracking-widest text-muted">
               Drop resume.pdf into /public to arm this download.

@@ -17,10 +17,10 @@ export default function RadioBar({
 
   return (
     <div className="pointer-events-auto fixed bottom-0 left-1/2 z-40 hidden -translate-x-1/2 pb-2 md:block">
-      <div className="hud-panel flex items-center gap-1 rounded-full px-3 py-1.5 shadow-hud">
-        <Radio size={14} className="mr-1 text-hudpink" aria-hidden />
+      <div className="carbon flex items-center gap-1 rounded-full border border-white/10 px-3 py-1.5 shadow-hud">
+        <Radio size={14} className="mr-1 text-[var(--accent)]" aria-hidden />
         <span className="mr-2 font-mono text-[9px] uppercase tracking-widest text-muted">
-          Tuner
+          Radio
         </span>
         {navItems.map((item, i) => (
           <button
@@ -32,7 +32,7 @@ export default function RadioBar({
             }}
             className={`rounded-full px-2.5 py-1 font-mono text-[10px] uppercase tracking-wide transition-colors ${
               i === activeIndex
-                ? "bg-hudgold text-black"
+                ? "bg-[var(--accent)] text-white"
                 : "text-muted hover:text-ink"
             }`}
             aria-current={i === activeIndex ? "true" : undefined}

@@ -10,8 +10,8 @@ import {
   useState,
 } from "react";
 
-type Theme = "los-santos" | "vice";
-type SoundName = "click" | "whoosh" | "stamp" | "siren";
+type Theme = "race" | "night";
+type SoundName = "click" | "whoosh" | "stamp" | "siren" | "rev";
 
 type GameState = {
   theme: Theme;
@@ -33,7 +33,7 @@ export function useGame(): GameState {
 }
 
 export function GameProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("los-santos");
+  const [theme, setThemeState] = useState<Theme>("race");
   const [muted, setMuted] = useState(true); // muted by default per spec
   const [wanted, setWanted] = useState(0);
   const audioCtxRef = useRef<AudioContext | null>(null);
@@ -41,13 +41,13 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   // Reflect the theme onto the document so CSS variables switch.
   useEffect(() => {
     const root = document.documentElement;
-    if (theme === "vice") root.setAttribute("data-theme", "vice");
+    if (theme === "night") root.setAttribute("data-theme", "night");
     else root.removeAttribute("data-theme");
   }, [theme]);
 
   const setTheme = useCallback((t: Theme) => setThemeState(t), []);
   const toggleTheme = useCallback(
-    () => setThemeState((p) => (p === "los-santos" ? "vice" : "los-santos")),
+    () => setThemeState((p) => (p === "race" ? "night" : "race")),
     []
   );
   const toggleMute = useCallback(() => setMuted((m) => !m), []);
@@ -83,6 +83,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           whoosh: { type: "sawtooth", from: 120, to: 720, dur: 0.45, vol: 0.06 },
           stamp: { type: "triangle", from: 300, to: 90, dur: 0.25, vol: 0.08 },
           siren: { type: "sine", from: 480, to: 980, dur: 0.5, vol: 0.06 },
+          rev: { type: "sawtooth", from: 220, to: 1100, dur: 0.3, vol: 0.05 },
         };
         const p = presets[name];
         osc.type = p.type;

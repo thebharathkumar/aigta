@@ -16,7 +16,7 @@ const SEQUENCE = [
   "a",
 ];
 
-// Typing the Konami sequence raises the HUD wanted level with a siren flash.
+// Typing the Konami sequence engages push mode in the HUD with a siren flash.
 export default function KonamiWanted() {
   const { setWanted, play } = useGame();
   const pos = useRef(0);

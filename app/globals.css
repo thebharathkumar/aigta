@@ -3,31 +3,33 @@
 @tailwind utilities;
 
 :root {
-  /* Los Santos gold day mode (default theme) */
-  --bg: #0e0e10;
-  --surface: #17171b;
-  --hud-green: #7fb800;
-  --hud-gold: #f2c14e;
-  --hud-cyan: #2ec4b6;
-  --hud-pink: #ff5da2;
-  --wanted: #ffd23f;
-  --text: #f5f5f2;
-  --muted: #9a9aa2;
-  --accent: var(--hud-gold);
+  /* Race Day theme (default). F1 timing-screen palette. */
+  --bg: #0a0a0f;
+  --surface: #15151e;
+  --f1-red: #e10600;
+  --hud-green: #00e676; /* personal best / DRS green */
+  --hud-gold: #ffd12e; /* yellow flag / slower sector */
+  --hud-cyan: #00d2be; /* telemetry teal */
+  --hud-pink: #b026ff; /* fastest lap purple */
+  --wanted: #ffd12e;
+  --text: #f5f6fa;
+  --muted: #9aa0ad;
+  --accent: var(--f1-red);
 }
 
-/* Vice City night mode, toggled by the cheat console (code: VICECITY). */
-:root[data-theme="vice"] {
-  --bg: #0a0612;
-  --surface: #160f24;
-  --hud-green: #2ec4b6;
-  --hud-gold: #ff5da2;
-  --hud-cyan: #5de4ff;
-  --hud-pink: #ff5da2;
-  --wanted: #5de4ff;
-  --text: #fdf3ff;
-  --muted: #b89ad0;
-  --accent: var(--hud-pink);
+/* Night Race theme, toggled by the cheat console (code: NIGHTRACE). */
+:root[data-theme="night"] {
+  --bg: #05060f;
+  --surface: #0d1226;
+  --f1-red: #ff2e88;
+  --hud-green: #2bff88;
+  --hud-gold: #ffe14d;
+  --hud-cyan: #2fe6ff;
+  --hud-pink: #c64bff;
+  --wanted: #2fe6ff;
+  --text: #eef4ff;
+  --muted: #8da3c8;
+  --accent: #2fe6ff;
 }
 
 * {
@@ -100,11 +102,92 @@ body {
   );
 }
 
-/* Duotone gold/charcoal treatment for the placeholder portrait silhouette. */
+/* Carbon-fibre tinted block used for portrait/photo placeholders. */
 .duotone-portrait {
   background:
-    radial-gradient(120% 80% at 50% 0%, rgba(242, 193, 78, 0.35), transparent 60%),
+    radial-gradient(120% 80% at 50% 0%, rgba(225, 6, 0, 0.3), transparent 60%),
     linear-gradient(160deg, var(--surface), #050507);
+}
+
+/* Carbon-fibre weave surface for HUD panels and cards. */
+.carbon {
+  background-color: var(--surface);
+  background-image:
+    linear-gradient(27deg, #1b1b24 5px, transparent 5px),
+    linear-gradient(207deg, #1b1b24 5px, transparent 5px),
+    linear-gradient(27deg, #101017 5px, transparent 5px),
+    linear-gradient(207deg, #101017 5px, transparent 5px);
+  background-position:
+    0 0,
+    1px 5px,
+    5px 5px,
+    6px 0;
+  background-size: 10px 10px;
+}
+
+/* Checkered finish-line strip. */
+.checkered {
+  background-image:
+    linear-gradient(45deg, #fff 25%, transparent 25%),
+    linear-gradient(-45deg, #fff 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #fff 75%),
+    linear-gradient(-45deg, transparent 75%, #fff 75%);
+  background-size: 16px 16px;
+  background-position:
+    0 0,
+    0 8px,
+    8px -8px,
+    -8px 0px;
+  background-color: #000;
+}
+
+/* Animated asphalt with a centre racing line, scrolls toward the viewer. */
+@keyframes track-scroll {
+  from {
+    background-position:
+      0 0,
+      0 0;
+  }
+  to {
+    background-position:
+      0 0,
+      0 120px;
+  }
+}
+.track-bg {
+  background-color: #0b0b0f;
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(225, 6, 0, 0.08), transparent 60%),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 40px,
+      rgba(255, 255, 255, 0.18) 40px,
+      rgba(255, 255, 255, 0.18) 70px
+    );
+  background-size:
+    100% 100%,
+    6px 120px;
+  background-position:
+    center,
+    center;
+  background-repeat: no-repeat, repeat-y;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .track-bg {
+    animation: track-scroll 1.2s linear infinite;
+  }
+}
+
+/* Diagonal speed lines that streak across on reveal. */
+.speed-lines {
+  background-image: repeating-linear-gradient(
+    115deg,
+    transparent 0,
+    transparent 18px,
+    rgba(255, 255, 255, 0.05) 18px,
+    rgba(255, 255, 255, 0.05) 20px
+  );
 }
 
 .hud-panel {
