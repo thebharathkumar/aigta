@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Dark holographic AI-lab palette. */
+  --bg: #05060e;
+  --surface: #0b0e1c;
+  --accent: #22d3ee; /* cyan, primary */
+  --f1-red: #22d3ee; /* legacy alias, kept so older classes resolve */
+  --hud-cyan: #22d3ee;
+  --hud-green: #2dd4bf; /* teal / healthy */
+  --hud-gold: #a78bfa; /* violet accent */
+  --hud-pink: #d946ef; /* magenta */
+  --hud-blue: #3b82f6; /* electric blue */
+  --wanted: #d946ef;
+  --text: #eaf2ff;
+  --muted: #8b95b5;
+}
+
+/* Synthwave variant, toggled by the command palette (code: SYNTH). */
+:root[data-theme="night"] {
+  --bg: #0a0413;
+  --surface: #160a24;
+  --accent: #f0abfc;
+  --f1-red: #f0abfc;
+  --hud-cyan: #67e8f9;
+  --hud-green: #5eead4;
+  --hud-gold: #c4b5fd;
+  --hud-pink: #f472b6;
+  --hud-blue: #818cf8;
+  --wanted: #67e8f9;
+  --text: #fdf0ff;
+  --muted: #b79ad6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body), system-ui, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+.font-display {
+  letter-spacing: -0.01em;
+}
+
+/* Film grain overlay above content, below the HUD. */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 40;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.vignette-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 39;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.6) 100%);
+}
+
+/* CRT scanlines, used on the boot screen only. */
+.scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(120, 200, 255, 0.05) 0px,
+    rgba(120, 200, 255, 0.05) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+/* Frosted glass panel. Reused everywhere cards appear (legacy name .carbon). */
+.carbon,
+.glass {
+  background: linear-gradient(160deg, rgba(34, 211, 238, 0.06), rgba(11, 14, 28, 0.72));
+  border: 1px solid rgba(130, 170, 255, 0.14);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Holographic block for avatar / portrait placeholders. */
+.duotone-portrait {
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(34, 211, 238, 0.35), transparent 60%),
+    linear-gradient(160deg, var(--surface), #04040a);
+}
+
+/* Animated perspective data grid that recedes into the distance. */
+@keyframes grid-flow {
+  to {
+    background-position: 0 40px;
+  }
+}
+.holo-grid {
+  background-image:
+    linear-gradient(rgba(60, 130, 255, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(60, 130, 255, 0.12) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: linear-gradient(to top, #000 0%, transparent 80%);
+  -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 80%);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .holo-grid {
+    animation: grid-flow 1.4s linear infinite;
+  }
+}
+
+/* Soft glow text for headings. */
+.glow-text {
+  text-shadow: 0 0 24px rgba(34, 211, 238, 0.35), 0 0 60px rgba(217, 70, 239, 0.18);
+}
+
+/* Animated gradient sweep used on the primary CTA. */
+@keyframes sheen {
+  to {
+    background-position: 200% center;
+  }
+}
+
+.section-anchor {
+  scroll-margin-top: 80px;
+}
+
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--hud-blue), var(--hud-pink));
+  border: 2px solid var(--bg);
+  border-radius: 8px;
+}
