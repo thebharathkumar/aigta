@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Los Santos gold day mode (default theme) */
+  --bg: #0e0e10;
+  --surface: #17171b;
+  --hud-green: #7fb800;
+  --hud-gold: #f2c14e;
+  --hud-cyan: #2ec4b6;
+  --hud-pink: #ff5da2;
+  --wanted: #ffd23f;
+  --text: #f5f5f2;
+  --muted: #9a9aa2;
+  --accent: var(--hud-gold);
+}
+
+/* Vice City night mode, toggled by the cheat console (code: VICECITY). */
+:root[data-theme="vice"] {
+  --bg: #0a0612;
+  --surface: #160f24;
+  --hud-green: #2ec4b6;
+  --hud-gold: #ff5da2;
+  --hud-cyan: #5de4ff;
+  --hud-pink: #ff5da2;
+  --wanted: #5de4ff;
+  --text: #fdf3ff;
+  --muted: #b89ad0;
+  --accent: var(--hud-pink);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body), system-ui, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Headings use the condensed display face. */
+.font-display {
+  letter-spacing: 0.02em;
+}
+
+/* Light film grain overlay sitting above everything but below the HUD. */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 40;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Subtle vignette around the viewport edges. */
+.vignette-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 39;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 55%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+/* CRT scanlines, used on the loading screen only. */
+.scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.04) 0px,
+    rgba(255, 255, 255, 0.04) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+/* Duotone gold/charcoal treatment for the placeholder portrait silhouette. */
+.duotone-portrait {
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(242, 193, 78, 0.35), transparent 60%),
+    linear-gradient(160deg, var(--surface), #050507);
+}
+
+.hud-panel {
+  background: linear-gradient(180deg, rgba(23, 23, 27, 0.92), rgba(14, 14, 16, 0.92));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(6px);
+}
+
+.section-anchor {
+  scroll-margin-top: 80px;
+}
+
+/* Accessible focus rings on all interactive game elements. */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Thin custom scrollbar to match the HUD. */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--surface);
+  border: 2px solid var(--bg);
+  border-radius: 8px;
+}
