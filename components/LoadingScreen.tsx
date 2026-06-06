@@ -1,51 +1,54 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { loadingTips, profile } from "@/lib/content";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { useGame } from "./providers/GameProvider";
-import RaceCar from "./art/RaceCar";
 
-// F1 start-lights sequence. Five lights illuminate one by one, then lights out
-// and the car launches, dismissing into the hero.
+// Neural boot sequence: a console streams init lines while weights "load",
+// then the model goes ready and a tap launches the experience.
 export default function LoadingScreen({ onDone }: { onDone: () => void }) {
-  const [lights, setLights] = useState(0); // 0 to 5 lit
-  const [lightsOut, setLightsOut] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [lines, setLines] = useState<string[]>([]);
   const [ready, setReady] = useState(false);
-  const [tip, setTip] = useState(0);
   const [launched, setLaunched] = useState(false);
   const reduced = useReducedMotion();
   const { play } = useGame();
+  const lineIdx = useRef(0);
 
-  // Light up the five lights, then go dark ("lights out") and arm the launch.
+  // Fill the progress and append a boot line at each step.
   useEffect(() => {
-    if (lights < 5) {
-      const id = setTimeout(() => {
-        setLights((l) => l + 1);
-        play("click");
-      }, 600);
-      return () => clearTimeout(id);
-    }
-    const hold = setTimeout(() => {
-      setLightsOut(true);
-      setReady(true);
-      play("rev");
-    }, 700);
-    return () => clearTimeout(hold);
-  }, [lights, play]);
-
-  // Cycle the boot tip lines.
-  useEffect(() => {
-    const id = setInterval(() => setTip((t) => (t + 1) % loadingTips.length), 760);
+    if (ready) return;
+    const id = setInterval(() => {
+      setProgress((p) => {
+        const next = Math.min(100, p + Math.random() * 11 + 4);
+        if (next >= 100) {
+          clearInterval(id);
+          setReady(true);
+          play("whoosh");
+        }
+        return next;
+      });
+    }, 130);
     return () => clearInterval(id);
-  }, []);
+  }, [ready, play]);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      const tip = loadingTips[lineIdx.current % loadingTips.length];
+      lineIdx.current += 1;
+      setLines((l) => [...l.slice(-5), tip]);
+      play("click");
+    }, 360);
+    return () => clearInterval(id);
+  }, [play]);
 
   const launch = () => {
     if (!ready || launched) return;
     play("whoosh");
     setLaunched(true);
-    setTimeout(onDone, reduced ? 0 : 700);
+    setTimeout(onDone, reduced ? 0 : 650);
   };
 
   useEffect(() => {
@@ -55,95 +58,97 @@ export default function LoadingScreen({ onDone }: { onDone: () => void }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, launched]);
 
-  const progress = Math.min(100, Math.round((lights / 5) * 100));
-
   return (
     <AnimatePresence>
       {!launched && (
         <motion.div
-          key="lights"
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden bg-[#050507]"
+          key="boot"
+          className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-[#04040a]"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: reduced ? 0 : 0.7 }}
+          transition={{ duration: reduced ? 0 : 0.65 }}
           onClick={launch}
           role="dialog"
-          aria-label="Race start lights. Press any key or click to launch."
+          aria-label="Boot screen. Press any key or click to enter."
         >
           <div className="scanlines" aria-hidden />
-
-          <p className="mb-2 font-mono text-xs uppercase tracking-[0.35em] text-hudcyan">
-            Formation Lap Complete
-          </p>
-          <h1 className="mb-8 px-6 text-center font-display text-3xl text-ink md:text-5xl">
-            {profile.name}
-          </h1>
-
-          {/* The five-light gantry. */}
-          <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/60 px-5 py-4 md:gap-5 md:px-8 md:py-6">
-            {Array.from({ length: 5 }).map((_, i) => {
-              const lit = !lightsOut && i < lights;
-              return (
-                <div key={i} className="flex flex-col gap-2">
-                  {[0, 1].map((row) => (
-                    <motion.span
-                      key={row}
-                      className="block h-7 w-7 rounded-full md:h-10 md:w-10"
-                      style={{
-                        background: lit ? "var(--f1-red)" : "#1a1a1f",
-                        boxShadow: lit ? "0 0 22px 4px rgba(225,6,0,0.7)" : "none",
-                      }}
-                      animate={lightsOut ? { background: "#0c0c10" } : {}}
-                    />
-                  ))}
-                </div>
-              );
-            })}
+          {/* Faint streaming token rain in the background. */}
+          <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-[0.07]" aria-hidden>
+            {Array.from({ length: 18 }).map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute top-0 font-mono text-[10px] leading-4 text-hudcyan"
+                style={{ left: `${(i / 18) * 100}%` }}
+                initial={{ y: "-20%" }}
+                animate={reduced ? {} : { y: "120%" }}
+                transition={{ repeat: Infinity, duration: 5 + (i % 5), ease: "linear", delay: i * 0.2 }}
+              >
+                {Array.from({ length: 20 }).map((_, j) => (
+                  <div key={j}>{Math.random() > 0.5 ? "1" : "0"}{Math.round(Math.random() * 9)}</div>
+                ))}
+              </motion.div>
+            ))}
           </div>
 
-          <div className="mt-8 h-6">
-            <AnimatePresence mode="wait">
-              {ready ? (
+          <div className="relative z-10 w-full max-w-xl px-6">
+            <p className="mb-2 font-mono text-xs uppercase tracking-[0.35em] text-hudcyan">
+              Neural Runtime
+            </p>
+            <h1 className="mb-6 font-display text-3xl font-extrabold text-ink md:text-5xl">
+              {profile.name}
+            </h1>
+
+            {/* Boot console */}
+            <div className="glass rounded-xl p-4 font-mono text-xs text-hudgreen md:text-sm">
+              {lines.map((l, i) => (
+                <div key={i} className="flex gap-2 opacity-90">
+                  <span className="text-hudpink">{">"}</span>
+                  <span>{l}</span>
+                  <span className="text-muted">[ok]</span>
+                </div>
+              ))}
+              {lines.length === 0 && <div className="text-muted">{">"} cold start...</div>}
+            </div>
+
+            <div className="mt-4">
+              <div className="mb-1 flex items-center justify-between font-mono text-xs">
+                <span className="text-muted">loading weights</span>
+                <span className="text-hudcyan">{Math.round(progress)}%</span>
+              </div>
+              <div
+                className="h-2 w-full overflow-hidden rounded-full bg-white/5"
+                role="progressbar"
+                aria-valuenow={Math.round(progress)}
+                aria-valuemin={0}
+                aria-valuemax={100}
+              >
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-hudblue via-hudcyan to-hudpink transition-[width] duration-150"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+            </div>
+
+            <div className="mt-6 h-8">
+              {ready && (
                 <motion.button
-                  key="go"
                   type="button"
                   onClick={launch}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="font-display text-2xl tracking-[0.2em] text-hudgreen md:text-3xl"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="font-display text-xl font-bold tracking-wide text-ink"
                 >
-                  <motion.span animate={reduced ? {} : { opacity: [1, 0.4, 1] }} transition={{ repeat: Infinity, duration: 0.9 }}>
-                    LIGHTS OUT. TAP TO GO
+                  <motion.span
+                    className="glow-text"
+                    animate={reduced ? {} : { opacity: [1, 0.4, 1] }}
+                    transition={{ repeat: Infinity, duration: 1.1 }}
+                  >
+                    MODEL READY. TAP TO ENTER
                   </motion.span>
                 </motion.button>
-              ) : (
-                <motion.span
-                  key="tip"
-                  className="font-mono text-xs text-muted md:text-sm"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  aria-live="polite"
-                >
-                  {loadingTips[tip]} {progress}%
-                </motion.span>
               )}
-            </AnimatePresence>
+            </div>
           </div>
-
-          {/* Launching car. */}
-          <motion.div
-            className="pointer-events-none absolute bottom-10 w-[260px] md:w-[360px]"
-            initial={{ x: "-60vw", opacity: 0 }}
-            animate={
-              launched && !reduced
-                ? { x: "120vw", opacity: 1 }
-                : { x: 0, opacity: 1 }
-            }
-            transition={{ duration: launched ? 0.7 : 0.9, ease: launched ? "easeIn" : "easeOut" }}
-          >
-            <RaceCar />
-          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>

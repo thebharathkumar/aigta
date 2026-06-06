@@ -1,11 +1,10 @@
 "use client";
 
-import { Radio } from "lucide-react";
+import { LayoutGrid } from "lucide-react";
 import { navItems } from "@/lib/content";
 import { useGame } from "./providers/GameProvider";
 
-// Bottom "radio station" strip that is really a section switcher styled like a
-// tuner. Audio stays muted by default; this is navigation flavor.
+// Bottom strip that jumps between sections, styled like a tab switcher.
 export default function RadioBar({
   activeIndex,
   onNavigate,
@@ -17,10 +16,10 @@ export default function RadioBar({
 
   return (
     <div className="pointer-events-auto fixed bottom-0 left-1/2 z-40 hidden -translate-x-1/2 pb-2 md:block">
-      <div className="carbon flex items-center gap-1 rounded-full border border-white/10 px-3 py-1.5 shadow-hud">
-        <Radio size={14} className="mr-1 text-[var(--accent)]" aria-hidden />
+      <div className="glass flex items-center gap-1 rounded-full px-3 py-1.5 shadow-hud">
+        <LayoutGrid size={13} className="mr-1 text-[var(--accent)]" aria-hidden />
         <span className="mr-2 font-mono text-[9px] uppercase tracking-widest text-muted">
-          Radio
+          Jump
         </span>
         {navItems.map((item, i) => (
           <button
@@ -32,7 +31,7 @@ export default function RadioBar({
             }}
             className={`rounded-full px-2.5 py-1 font-mono text-[10px] uppercase tracking-wide transition-colors ${
               i === activeIndex
-                ? "bg-[var(--accent)] text-white"
+                ? "bg-[var(--accent)] text-[#04040a]"
                 : "text-muted hover:text-ink"
             }`}
             aria-current={i === activeIndex ? "true" : undefined}

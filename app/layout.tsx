@@ -1,10 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Anton, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Sora, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const display = Anton({
+const display = Sora({
   subsets: ["latin"],
-  weight: "400",
+  weight: ["600", "700", "800"],
   variable: "--font-display",
   display: "swap",
 });
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://thebharath.co"),
   title: "Bharath Kumar Rajesh // AI Engineer",
   description:
-    "Formula 1 themed portfolio. AI Engineer building production multi-agent systems: LangGraph, Claude on Amazon Bedrock, MCP, RAG, and LLM observability.",
+    "AI Engineer building production multi-agent systems: LangGraph, Claude on Amazon Bedrock, MCP, RAG, and LLM observability. An interactive WebGL portfolio.",
   keywords: [
     "AI Engineer",
     "Forward Deployed Engineer",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Bharath Kumar Rajesh // AI Engineer",
     description:
-      "A Formula 1 themed portfolio. Agentic systems, evals, and frontier-model tooling.",
+      "An interactive WebGL portfolio. Agentic systems, evals, and frontier-model tooling.",
     url: "https://thebharath.co",
     siteName: "thebharath.co",
     type: "website",

@@ -7,16 +7,23 @@ import { navItems } from "@/lib/content";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { useGame } from "./providers/GameProvider";
 
-// Inline steering-wheel glyph, original art.
-function SteeringWheel({ className = "" }: { className?: string }) {
+// Inline node-cluster glyph for the command hub, original art.
+function CommandGlyph({ className = "" }: { className?: string }) {
   return (
     <svg viewBox="0 0 48 48" className={className} aria-hidden>
-      <circle cx={24} cy={24} r={20} fill="none" stroke="currentColor" strokeWidth={3} />
-      <circle cx={24} cy={24} r={6} fill="currentColor" />
-      <path d="M24 30 L24 44" stroke="currentColor" strokeWidth={3} />
-      <path d="M19 25 L6 33" stroke="currentColor" strokeWidth={3} />
-      <path d="M29 25 L42 33" stroke="currentColor" strokeWidth={3} />
-      <rect x={16} y={12} width={16} height={5} rx={2} fill="currentColor" />
+      <circle cx={24} cy={24} r={5} fill="currentColor" />
+      <g stroke="currentColor" strokeWidth={2} opacity={0.6}>
+        <line x1={24} y1={24} x2={10} y2={10} />
+        <line x1={24} y1={24} x2={38} y2={10} />
+        <line x1={24} y1={24} x2={10} y2={38} />
+        <line x1={24} y1={24} x2={38} y2={38} />
+      </g>
+      <g fill="currentColor">
+        <circle cx={10} cy={10} r={3} />
+        <circle cx={38} cy={10} r={3} />
+        <circle cx={10} cy={38} r={3} />
+        <circle cx={38} cy={38} r={3} />
+      </g>
     </svg>
   );
 }
@@ -27,7 +34,7 @@ export default function Navigation({ onNavigate }: { onNavigate: (id: string) =>
   const reduced = useReducedMotion();
   const { play } = useGame();
 
-  // Tab opens and closes the desktop steering wheel.
+  // Tab opens and closes the desktop command hub.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
@@ -66,13 +73,13 @@ export default function Navigation({ onNavigate }: { onNavigate: (id: string) =>
           else setMenuOpen((o) => !o);
         }}
         className="carbon pointer-events-auto fixed bottom-4 right-4 z-50 flex h-14 w-14 items-center justify-center rounded-full border border-white/10 shadow-hud transition-transform hover:scale-105 hover:rotate-12"
-        aria-label="Open steering wheel menu"
+        aria-label="Open command hub menu"
         aria-expanded={wheelOpen || menuOpen}
       >
-        <SteeringWheel className="h-7 w-7 text-hudcyan" />
+        <CommandGlyph className="h-7 w-7 text-hudcyan" />
       </button>
 
-      {/* Desktop radial steering wheel */}
+      {/* Desktop radial command hub */}
       <AnimatePresence>
         {wheelOpen && (
           <motion.div
@@ -91,11 +98,11 @@ export default function Navigation({ onNavigate }: { onNavigate: (id: string) =>
               transition={{ type: "spring", stiffness: 220, damping: 22 }}
               onClick={(e) => e.stopPropagation()}
               role="menu"
-              aria-label="Steering wheel navigation"
+              aria-label="Command hub navigation"
             >
               {/* Hub */}
               <div className="carbon absolute left-1/2 top-1/2 z-10 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border border-white/10 text-center shadow-hud">
-                <SteeringWheel className="h-8 w-8 text-hudcyan" />
+                <CommandGlyph className="h-8 w-8 text-hudcyan" />
                 <span className="mt-1 font-display text-xs text-hudcyan">SELECT</span>
                 <span className="font-mono text-[9px] uppercase tracking-widest text-muted">
                   Tab to close
@@ -147,10 +154,10 @@ export default function Navigation({ onNavigate }: { onNavigate: (id: string) =>
               animate={{ x: 0 }}
               exit={{ x: reduced ? 0 : "100%" }}
               transition={{ type: "spring", stiffness: 260, damping: 30 }}
-              aria-label="Pit menu navigation"
+              aria-label="Menu navigation"
             >
               <div className="mb-4 flex items-center justify-between">
-                <span className="font-display text-2xl text-[var(--accent)]">PIT MENU</span>
+                <span className="font-display text-2xl font-bold text-[var(--accent)]">NAVIGATE</span>
                 <button
                   type="button"
                   onClick={() => setMenuOpen(false)}

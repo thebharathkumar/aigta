@@ -284,19 +284,22 @@ export const contactEmail = "bharath.kr702@gmail.com";
 export const portfolioUrl = "https://thebharath.co";
 
 export const navItems: NavItem[] = [
-  { id: "hero", label: "Grid" },
-  { id: "about", label: "Driver" },
-  { id: "projects", label: "Race Wins" },
-  { id: "experience", label: "Season" },
-  { id: "publications", label: "Trophies" },
-  { id: "certifications", label: "Super License" },
-  { id: "contact", label: "Pit Wall" },
+  { id: "hero", label: "Home" },
+  { id: "about", label: "Profile" },
+  { id: "orchestration", label: "Agents" },
+  { id: "projects", label: "Systems" },
+  { id: "experience", label: "Deployments" },
+  { id: "publications", label: "Research" },
+  { id: "certifications", label: "Credentials" },
+  { id: "contact", label: "Console" },
 ];
 
-// Boot lines that cycle during the start-lights sequence. No em dashes.
+// Boot lines that cycle during the neural boot sequence. No em dashes.
 export const loadingTips: string[] = [
-  "Spooling up the power unit...",
-  "Warming the tyres to temperature...",
-  "Telemetry link online...",
-  "Lights out and away we go...",
+  "Initializing runtime...",
+  "Loading model weights...",
+  "Warming the inference cache...",
+  "Spinning up agents...",
+  "Connecting tool servers...",
+  "Calibrating embeddings...",
 ];

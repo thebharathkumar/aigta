@@ -15,6 +15,7 @@ import MissionPassed from "@/components/easter/MissionPassed";
 
 // Lazy-load below-the-fold sections to keep the first paint light.
 const About = dynamic(() => import("@/components/sections/About"));
+const AgentGraph = dynamic(() => import("@/components/sections/AgentGraph"));
 const Experience = dynamic(() => import("@/components/sections/Experience"));
 const Projects = dynamic(() => import("@/components/sections/Projects"));
 const Publications = dynamic(() => import("@/components/sections/Publications"));
@@ -107,18 +108,23 @@ function Game() {
       <main className={loaded ? "opacity-100 transition-opacity duration-700" : "opacity-0"}>
         <Hero onNavigate={navigate} />
         <About />
-        <Experience />
+        <AgentGraph />
         <Projects onComplete={handleProjectsComplete} />
+        <Experience />
         <Publications />
         <Certifications />
         <Contact />
 
         <footer className="relative border-t border-white/10 px-5 py-10 text-center">
-          <div className="checkered absolute left-0 right-0 top-0 h-2 opacity-50" aria-hidden />
+          <div
+            className="absolute left-0 right-0 top-0 h-px"
+            style={{ background: "linear-gradient(90deg, transparent, var(--hud-cyan), var(--hud-pink), transparent)" }}
+            aria-hidden
+          />
           <p className="font-mono text-xs uppercase tracking-widest text-muted">
-            Original homage. Not affiliated with Formula 1, the FIA, or any team. Built with Next.js.
+            Built with Next.js, Three.js, and Framer Motion. Designed and shipped by Bharath Kumar Rajesh.
           </p>
-          <p className="mt-2 font-display text-xl text-[var(--accent)]">SEE YOU ON THE PODIUM</p>
+          <p className="mt-2 font-display text-xl font-bold text-[var(--accent)]">THANKS FOR EXPLORING</p>
         </footer>
       </main>
     </>

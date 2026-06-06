@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { useGame } from "../providers/GameProvider";
 
-// One-time chequered-flag banner that slaps in when the race wins are completed.
+// One-time banner that fires when the systems section is fully explored.
 export default function MissionPassed({
   show,
   onHide,
@@ -23,7 +23,7 @@ export default function MissionPassed({
       document.body.classList.add("animate-shake");
       setTimeout(() => document.body.classList.remove("animate-shake"), 400);
     }
-    const id = setTimeout(onHide, 2800);
+    const id = setTimeout(onHide, 2600);
     return () => clearTimeout(id);
   }, [show, onHide, play, reduced]);
 
@@ -36,34 +36,27 @@ export default function MissionPassed({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          {/* Chequered flag waving across the top and bottom. */}
+          {/* Radial energy burst. */}
           <motion.div
-            className="checkered absolute left-0 right-0 top-0 h-10 opacity-90"
-            initial={{ x: reduced ? 0 : "-100%" }}
-            animate={{ x: 0 }}
-            transition={{ duration: 0.5 }}
+            className="absolute h-[40vmin] w-[40vmin] rounded-full"
+            style={{ background: "radial-gradient(circle, rgba(34,211,238,0.4), transparent 70%)" }}
+            initial={{ scale: reduced ? 1 : 0.2, opacity: 0.9 }}
+            animate={{ scale: reduced ? 1 : 3, opacity: 0 }}
+            transition={{ duration: 1.1, ease: "easeOut" }}
             aria-hidden
           />
-          <motion.div
-            className="checkered absolute bottom-0 left-0 right-0 h-10 opacity-90"
-            initial={{ x: reduced ? 0 : "100%" }}
-            animate={{ x: 0 }}
-            transition={{ duration: 0.5 }}
-            aria-hidden
-          />
-
           <motion.div
             className="text-center"
-            initial={{ scale: reduced ? 1 : 1.6, opacity: 0, rotate: reduced ? 0 : -5 }}
-            animate={{ scale: 1, opacity: 1, rotate: -3 }}
-            transition={{ type: "spring", stiffness: 320, damping: 14 }}
+            initial={{ scale: reduced ? 1 : 1.5, opacity: 0, y: reduced ? 0 : 10 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            transition={{ type: "spring", stiffness: 320, damping: 15 }}
           >
-            <div className="border-y-4 border-[var(--accent)] bg-black/75 px-10 py-6 backdrop-blur-sm">
-              <p className="font-display text-5xl tracking-wider text-[var(--accent)] md:text-7xl">
-                CHEQUERED FLAG
+            <div className="glass rounded-2xl border-y-2 border-hudcyan px-10 py-6 backdrop-blur-md">
+              <p className="glow-text font-display text-4xl font-extrabold tracking-wide text-hudcyan md:text-6xl">
+                INFERENCE COMPLETE
               </p>
-              <p className="mt-2 font-mono text-lg tracking-[0.4em] text-hudgreen">
-                P1 // FASTEST LAP
+              <p className="mt-2 font-mono text-base tracking-[0.4em] text-hudgreen md:text-lg">
+                ALL SYSTEMS GREEN
               </p>
             </div>
           </motion.div>

@@ -3,33 +3,35 @@
 @tailwind utilities;
 
 :root {
-  /* Race Day theme (default). F1 timing-screen palette. */
-  --bg: #0a0a0f;
-  --surface: #15151e;
-  --f1-red: #e10600;
-  --hud-green: #00e676; /* personal best / DRS green */
-  --hud-gold: #ffd12e; /* yellow flag / slower sector */
-  --hud-cyan: #00d2be; /* telemetry teal */
-  --hud-pink: #b026ff; /* fastest lap purple */
-  --wanted: #ffd12e;
-  --text: #f5f6fa;
-  --muted: #9aa0ad;
-  --accent: var(--f1-red);
+  /* Dark holographic AI-lab palette. */
+  --bg: #05060e;
+  --surface: #0b0e1c;
+  --accent: #22d3ee; /* cyan, primary */
+  --f1-red: #22d3ee; /* legacy alias, kept so older classes resolve */
+  --hud-cyan: #22d3ee;
+  --hud-green: #2dd4bf; /* teal / healthy */
+  --hud-gold: #a78bfa; /* violet accent */
+  --hud-pink: #d946ef; /* magenta */
+  --hud-blue: #3b82f6; /* electric blue */
+  --wanted: #d946ef;
+  --text: #eaf2ff;
+  --muted: #8b95b5;
 }
 
-/* Night Race theme, toggled by the cheat console (code: NIGHTRACE). */
+/* Synthwave variant, toggled by the command palette (code: SYNTH). */
 :root[data-theme="night"] {
-  --bg: #05060f;
-  --surface: #0d1226;
-  --f1-red: #ff2e88;
-  --hud-green: #2bff88;
-  --hud-gold: #ffe14d;
-  --hud-cyan: #2fe6ff;
-  --hud-pink: #c64bff;
-  --wanted: #2fe6ff;
-  --text: #eef4ff;
-  --muted: #8da3c8;
-  --accent: #2fe6ff;
+  --bg: #0a0413;
+  --surface: #160a24;
+  --accent: #f0abfc;
+  --f1-red: #f0abfc;
+  --hud-cyan: #67e8f9;
+  --hud-green: #5eead4;
+  --hud-gold: #c4b5fd;
+  --hud-pink: #f472b6;
+  --hud-blue: #818cf8;
+  --wanted: #67e8f9;
+  --text: #fdf0ff;
+  --muted: #b79ad6;
 }
 
 * {
@@ -59,148 +61,95 @@ body {
   }
 }
 
-/* Headings use the condensed display face. */
 .font-display {
-  letter-spacing: 0.02em;
+  letter-spacing: -0.01em;
 }
 
-/* Light film grain overlay sitting above everything but below the HUD. */
+/* Film grain overlay above content, below the HUD. */
 .grain-overlay {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 40;
-  opacity: 0.05;
+  opacity: 0.04;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Subtle vignette around the viewport edges. */
 .vignette-overlay {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 39;
-  background: radial-gradient(
-    ellipse at center,
-    transparent 55%,
-    rgba(0, 0, 0, 0.55) 100%
-  );
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.6) 100%);
 }
 
-/* CRT scanlines, used on the loading screen only. */
+/* CRT scanlines, used on the boot screen only. */
 .scanlines {
   position: absolute;
   inset: 0;
   pointer-events: none;
   background: repeating-linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 0.04) 0px,
-    rgba(255, 255, 255, 0.04) 1px,
+    rgba(120, 200, 255, 0.05) 0px,
+    rgba(120, 200, 255, 0.05) 1px,
     transparent 1px,
     transparent 3px
   );
 }
 
-/* Carbon-fibre tinted block used for portrait/photo placeholders. */
+/* Frosted glass panel. Reused everywhere cards appear (legacy name .carbon). */
+.carbon,
+.glass {
+  background: linear-gradient(160deg, rgba(34, 211, 238, 0.06), rgba(11, 14, 28, 0.72));
+  border: 1px solid rgba(130, 170, 255, 0.14);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Holographic block for avatar / portrait placeholders. */
 .duotone-portrait {
   background:
-    radial-gradient(120% 80% at 50% 0%, rgba(225, 6, 0, 0.3), transparent 60%),
-    linear-gradient(160deg, var(--surface), #050507);
+    radial-gradient(120% 90% at 50% 0%, rgba(34, 211, 238, 0.35), transparent 60%),
+    linear-gradient(160deg, var(--surface), #04040a);
 }
 
-/* Carbon-fibre weave surface for HUD panels and cards. */
-.carbon {
-  background-color: var(--surface);
-  background-image:
-    linear-gradient(27deg, #1b1b24 5px, transparent 5px),
-    linear-gradient(207deg, #1b1b24 5px, transparent 5px),
-    linear-gradient(27deg, #101017 5px, transparent 5px),
-    linear-gradient(207deg, #101017 5px, transparent 5px);
-  background-position:
-    0 0,
-    1px 5px,
-    5px 5px,
-    6px 0;
-  background-size: 10px 10px;
-}
-
-/* Checkered finish-line strip. */
-.checkered {
-  background-image:
-    linear-gradient(45deg, #fff 25%, transparent 25%),
-    linear-gradient(-45deg, #fff 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #fff 75%),
-    linear-gradient(-45deg, transparent 75%, #fff 75%);
-  background-size: 16px 16px;
-  background-position:
-    0 0,
-    0 8px,
-    8px -8px,
-    -8px 0px;
-  background-color: #000;
-}
-
-/* Animated asphalt with a centre racing line, scrolls toward the viewer. */
-@keyframes track-scroll {
-  from {
-    background-position:
-      0 0,
-      0 0;
-  }
+/* Animated perspective data grid that recedes into the distance. */
+@keyframes grid-flow {
   to {
-    background-position:
-      0 0,
-      0 120px;
+    background-position: 0 40px;
   }
 }
-.track-bg {
-  background-color: #0b0b0f;
+.holo-grid {
   background-image:
-    radial-gradient(circle at 50% 0%, rgba(225, 6, 0, 0.08), transparent 60%),
-    repeating-linear-gradient(
-      to bottom,
-      transparent 0,
-      transparent 40px,
-      rgba(255, 255, 255, 0.18) 40px,
-      rgba(255, 255, 255, 0.18) 70px
-    );
-  background-size:
-    100% 100%,
-    6px 120px;
-  background-position:
-    center,
-    center;
-  background-repeat: no-repeat, repeat-y;
+    linear-gradient(rgba(60, 130, 255, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(60, 130, 255, 0.12) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: linear-gradient(to top, #000 0%, transparent 80%);
+  -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 80%);
 }
 @media (prefers-reduced-motion: no-preference) {
-  .track-bg {
-    animation: track-scroll 1.2s linear infinite;
+  .holo-grid {
+    animation: grid-flow 1.4s linear infinite;
   }
 }
 
-/* Diagonal speed lines that streak across on reveal. */
-.speed-lines {
-  background-image: repeating-linear-gradient(
-    115deg,
-    transparent 0,
-    transparent 18px,
-    rgba(255, 255, 255, 0.05) 18px,
-    rgba(255, 255, 255, 0.05) 20px
-  );
+/* Soft glow text for headings. */
+.glow-text {
+  text-shadow: 0 0 24px rgba(34, 211, 238, 0.35), 0 0 60px rgba(217, 70, 239, 0.18);
 }
 
-.hud-panel {
-  background: linear-gradient(180deg, rgba(23, 23, 27, 0.92), rgba(14, 14, 16, 0.92));
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(6px);
+/* Animated gradient sweep used on the primary CTA. */
+@keyframes sheen {
+  to {
+    background-position: 200% center;
+  }
 }
 
 .section-anchor {
   scroll-margin-top: 80px;
 }
 
-/* Accessible focus rings on all interactive game elements. */
 a:focus-visible,
 button:focus-visible,
 [tabindex]:focus-visible {
@@ -209,7 +158,6 @@ button:focus-visible,
   border-radius: 4px;
 }
 
-/* Thin custom scrollbar to match the HUD. */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -217,7 +165,7 @@ button:focus-visible,
   background: var(--bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--surface);
+  background: linear-gradient(var(--hud-blue), var(--hud-pink));
   border: 2px solid var(--bg);
   border-radius: 8px;
 }

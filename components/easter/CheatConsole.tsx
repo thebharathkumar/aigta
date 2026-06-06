@@ -5,12 +5,12 @@ import { Terminal } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useGame } from "../providers/GameProvider";
 
-// Pit commands. Typing one toggles a theme or pokes the HUD. Pure fun.
+// Console commands. Typing one toggles a theme or pokes the HUD. Pure fun.
 const CHEATS: Record<string, { label: string; run: (g: ReturnType<typeof useGame>) => void }> = {
-  NIGHTRACE: { label: "Night race under the lights", run: (g) => g.setTheme("night") },
-  RACEDAY: { label: "Race day, full sun", run: (g) => g.setTheme("race") },
-  PUSH: { label: "Push mode engaged", run: (g) => g.setWanted(5) },
-  BOX: { label: "Box this lap, cool down", run: (g) => g.setWanted(0) },
+  SYNTH: { label: "Synthwave palette engaged", run: (g) => g.setTheme("night") },
+  CORE: { label: "Core holographic palette", run: (g) => g.setTheme("race") },
+  TURBO: { label: "GPU turbo engaged", run: (g) => g.setWanted(5) },
+  CHILL: { label: "Back to idle", run: (g) => g.setWanted(0) },
 };
 
 export default function CheatConsole() {
@@ -45,9 +45,9 @@ export default function CheatConsole() {
     game.play("rev");
     if (cheat) {
       cheat.run(game);
-      setFeedback(`COPY THAT: ${cheat.label}`);
+      setFeedback(`EXECUTED: ${cheat.label}`);
     } else {
-      setFeedback("RADIO CHECK: command not recognised");
+      setFeedback("COMMAND NOT FOUND");
     }
     setValue("");
   };
@@ -64,13 +64,13 @@ export default function CheatConsole() {
           <div className="carbon w-full max-w-lg rounded-xl border border-white/10 p-3 shadow-hud">
             <form onSubmit={submit} className="flex items-center gap-2">
               <Terminal size={16} className="text-hudgreen" />
-              <span className="font-mono text-xs text-hudgreen">pit:</span>
+              <span className="font-mono text-xs text-hudgreen">$</span>
               <input
                 ref={inputRef}
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
-                placeholder="Try NIGHTRACE or RACEDAY"
-                aria-label="Pit command console"
+                placeholder="Try SYNTH or TURBO"
+                aria-label="Command console"
                 className="flex-1 bg-transparent font-mono text-sm text-ink outline-none placeholder:text-muted"
                 autoComplete="off"
                 spellCheck={false}
@@ -85,7 +85,7 @@ export default function CheatConsole() {
               </p>
             )}
             <p className="mt-1 font-mono text-[10px] text-muted">
-              Commands: NIGHTRACE, RACEDAY, PUSH, BOX. Tilde to close.
+              Commands: SYNTH, CORE, TURBO, CHILL. Tilde to close.
             </p>
           </div>
         </motion.div>

@@ -15,6 +15,7 @@ const config: Config = {
         hudgold: "var(--hud-gold)",
         hudcyan: "var(--hud-cyan)",
         hudpink: "var(--hud-pink)",
+        hudblue: "var(--hud-blue)",
         wanted: "var(--wanted)",
         ink: "var(--text)",
         muted: "var(--muted)",
@@ -25,8 +26,8 @@ const config: Config = {
         mono: ["var(--font-mono)", "monospace"],
       },
       boxShadow: {
-        hud: "0 0 0 1px rgba(255,255,255,0.06), 0 8px 30px rgba(0,0,0,0.45)",
-        glow: "0 0 24px rgba(242,193,78,0.35)",
+        hud: "0 0 0 1px rgba(130,170,255,0.08), 0 8px 30px rgba(0,0,0,0.5)",
+        glow: "0 0 28px rgba(34,211,238,0.45)",
       },
       keyframes: {
         scanline: {
